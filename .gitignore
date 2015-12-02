@@ -1,0 +1,10 @@
+ProjectEuler/Debug/
+ProjectEuler/Debug/
+
+ProjectEuler/Task*/Debug/
+ProjectEuler/Task*/Release/
+
+ProjectEuler/*.sdf
+ProjectEuler/*.opensdf
+ProjectEuler/*.suo
+
