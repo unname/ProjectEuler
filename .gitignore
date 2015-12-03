@@ -1,8 +1,11 @@
 ProjectEuler/Debug/
 ProjectEuler/Release/
+ProjectEuler/x64
+
 
 ProjectEuler/Task*/Debug/
 ProjectEuler/Task*/Release/
+ProjectEuler/Task*/x64/
 
 ProjectEuler/*.sdf
 ProjectEuler/*.opensdf
