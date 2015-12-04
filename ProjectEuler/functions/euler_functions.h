@@ -4,7 +4,7 @@
 // k1 и k2      - диапазон поиска чисел
 // pOut и ulOut - массив найденых чисел и его размерность
 // x, ...       - перечень делителей
-void func1(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...);
+void get_div_by_dev(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...);
 
 
 // [Task_2] - получить массив(и его размерность) чисел, которые представляют собой последовательность 'Фибоначчи'
@@ -13,7 +13,7 @@ void func1(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...);
 // k            - верхний предел поиска
 // pOut и ulOut - массив найденых чисел и его размерность
 // start        - функция запускается первый раз (инициализация параметров)
-void func2(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start=false);
+void fib_series(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start=false);
 
 
 // [Task_3] - возведение в степень по модулю
@@ -29,24 +29,24 @@ size_t pow_mod(size_t n, size_t e, size_t m);
 // n - исходное число
 // d - найденный множитель
 // s - найденная степень
-void func3_1(size_t n, size_t *d, size_t *s);
+void expansion_ds(size_t n, size_t *d, size_t *s);
 
 // [Task_3] - проверяет число n на SPRP (сильное вероятно простое число) по основанию a
 //
 // n           - исходное число
 // a           - основание вычислений
 // return true - число является a-SPRP 
-bool func3_2(size_t n, size_t a);
+bool a_sprp(size_t n, size_t a);
 
 // [Task_3] - проверяет число n на отстутсвие простых (маленьких) делителей
 //
 // n           - исходное число
 // k           - количество делителей для проверки
 // return true - у числа не найденно делителей из набора
-bool func3_3(size_t n, size_t k);
+bool test_divisors(size_t n, size_t k);
 
 // [Task_3] - проверяет число n на простату
 //
 // n           - исходное число
 // return true - число простое
-bool func3_4(size_t n);
+bool is_prime(size_t n);

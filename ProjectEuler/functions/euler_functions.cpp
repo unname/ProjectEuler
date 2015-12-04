@@ -4,7 +4,7 @@
 #include "stdlib.h"
 #include "windows.h"
 
-void func1(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...)
+void get_div_by_dev(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...)
 {
     size_t *pIn;
     *ulOut = 0;
@@ -35,7 +35,7 @@ void func1(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...)
     }
 }
 
-void func2(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start)
+void fib_series(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start)
 {
     if (start)
     {
@@ -63,10 +63,10 @@ void func2(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool sta
 
     (*ulOut)++;
 
-    func2(n2, current_value, k, pOut, ulOut);
+    fib_series(n2, current_value, k, pOut, ulOut);
 }
 
-void func3_1(size_t n, size_t *d, size_t *s)
+void expansion_ds(size_t n, size_t *d, size_t *s)
 {
     *d = 0;
     *s = 0;
@@ -92,14 +92,14 @@ void func3_1(size_t n, size_t *d, size_t *s)
     }
 }
 
-bool func3_2(size_t n, size_t a)
+bool a_sprp(size_t n, size_t a)
 {
     // n is a strong probable-prime base a (an a-SPRP) if either a^d = 1 (mod n) or
     // (a^(d*2^r) = -1 (mod n) for some non-negative r less than s. 
 
     size_t d, s, r;
 
-    func3_1(n, &d, &s);
+    expansion_ds(n, &d, &s);
 
     if (d && s)
     {
@@ -116,7 +116,7 @@ bool func3_2(size_t n, size_t a)
     return false;
 }
 
-bool func3_3(size_t n, size_t k)
+bool test_divisors(size_t n, size_t k)
 {
     //простые делители от 1 до 10.000
     size_t prime_divisors[] =
@@ -260,68 +260,6 @@ bool func3_3(size_t n, size_t k)
     return true;
 }
 
-bool func3_4(size_t n)
-{
-    if (n == 2)
-        return true;
-    if (n == 3)
-        return true;
-
-    //k = 54 - все делители меньше 257
-    if (!func3_3(n, 54))
-        return false;
-  
-    //2 и 3-SPRP
-    if (!func3_2(n, 2))
-        return false;
-    if (!func3_2(n, 3))
-        return false;
-
-    if (n < 1373653)
-        return true;
-
-    //5-SPRP
-    if (!func3_2(n, 5))
-        return false;
-
-    if (n < 25326001)
-        return true;
-
-    //7-SPRP
-    if(n == 3215031751)
-        return false;
-
-    if (!func3_2(n, 7))
-        return false;
-
-    if (n < 25000000000)
-        return true;
-
-    //11-SPRP
-    if (!func3_2(n, 11))
-        return false;
-
-    if (n < 2152302898747)
-        return true;
-
-
-    //13-SPRP
-    if (!func3_2(n, 13))
-        return false;
-
-    if (n < 3474749660383)
-        return true;
-
-    //17-SPRP
-    if (!func3_2(n, 17))
-        return false;
-
-    if (n < 341550071728321)
-        return true;
-
-    return false;
-}
-
 size_t pow_mod(size_t n, size_t e, size_t m)
 {
     size_t digit  = 0;
@@ -347,4 +285,66 @@ size_t pow_mod(size_t n, size_t e, size_t m)
     }
 
     return result;
+}
+
+bool is_prime(size_t n)
+{
+    if (n == 2)
+        return true;
+    if (n == 3)
+        return true;
+
+    //k = 54 - все делители меньше 257
+    if (!test_divisors(n, 54))
+        return false;
+
+    //2 и 3-SPRP
+    if (!a_sprp(n, 2))
+        return false;
+    if (!a_sprp(n, 3))
+        return false;
+
+    if (n < 1373653)
+        return true;
+
+    //5-SPRP
+    if (!a_sprp(n, 5))
+        return false;
+
+    if (n < 25326001)
+        return true;
+
+    //7-SPRP
+    if (n == 3215031751)
+        return false;
+
+    if (!a_sprp(n, 7))
+        return false;
+
+    if (n < 25000000000)
+        return true;
+
+    //11-SPRP
+    if (!a_sprp(n, 11))
+        return false;
+
+    if (n < 2152302898747)
+        return true;
+
+
+    //13-SPRP
+    if (!a_sprp(n, 13))
+        return false;
+
+    if (n < 3474749660383)
+        return true;
+
+    //17-SPRP
+    if (!a_sprp(n, 17))
+        return false;
+
+    if (n < 341550071728321)
+        return true;
+
+    return false;
 }

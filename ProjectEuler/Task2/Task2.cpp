@@ -15,9 +15,9 @@ int main(int argc, char **argv)
     size_t *p;
     size_t len;
 
-    func2(1, 1, 4000000, NULL, &len, true);
+    fib_series(1, 1, 4000000, NULL, &len, true);
     p = (size_t*)malloc(sizeof(size_t) * len);
-    func2(1, 1, 4000000, p, &len, true);
+    fib_series(1, 1, 4000000, p, &len, true);
 
     //—читаем сумму всех найденных чЄтных чисел
     size_t sum = 0;
