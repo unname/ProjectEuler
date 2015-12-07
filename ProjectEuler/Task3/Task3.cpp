@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     {
         if (test_value%i == 0)
         {
-            if (is_prime(i))
+            if (test_prime(i))
                 max_prime = i;
         }
     }

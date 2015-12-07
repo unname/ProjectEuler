@@ -42,11 +42,18 @@ bool a_sprp(size_t n, size_t a);
 //
 // n           - исходное число
 // k           - количество делителей для проверки
-// return true - у числа не найденно делителей из набора
+// return true - у числа не найдено делителей из набора
 bool test_divisors(size_t n, size_t k);
 
 // [Task_3] - проверяет число n на простату
 //
 // n           - исходное число
 // return true - число простое
-bool is_prime(size_t n);
+bool test_prime(size_t n);
+
+// [Task_4] - проверяет число n на полиндромность
+//
+// n           - исходное число
+// b           - система счисления
+// return true - число полиндром
+bool test_palindrome(size_t n, size_t b);

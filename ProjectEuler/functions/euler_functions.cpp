@@ -250,7 +250,7 @@ bool test_divisors(size_t n, size_t k)
 
     for (size_t i = 0; i < min(k, sizeof(prime_divisors)); ++i)
     {
-        if (k > last_k)
+        if (prime_divisors[i] > last_k)
             break;
 
         if (n % prime_divisors[i] == 0)
@@ -287,7 +287,7 @@ size_t pow_mod(size_t n, size_t e, size_t m)
     return result;
 }
 
-bool is_prime(size_t n)
+bool test_prime(size_t n)
 {
     if (n == 2)
         return true;
@@ -347,4 +347,37 @@ bool is_prime(size_t n)
         return true;
 
     return false;
+}
+
+bool test_palindrome(size_t n, size_t b)
+{
+    size_t capacity = 0;
+    size_t n1 = n;
+    bool result = true;
+
+    while (n1)
+    {
+        capacity++;
+        n1 = n1 / b;
+    }
+
+    size_t* digits = (size_t *)malloc(sizeof(size_t)* capacity);
+    
+    for (size_t i = 0; i < capacity; ++i)
+    {
+        digits[i] = n % b;
+        n = n / b;
+    }
+
+    for (size_t i = 0; i < capacity/2; ++i)
+    {
+        if (digits[i] != digits[capacity-1-i])
+        {
+            result = false;
+            break;
+        }
+    }
+
+    free(digits);
+    return result;
 }
