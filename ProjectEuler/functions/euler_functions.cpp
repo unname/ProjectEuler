@@ -4,7 +4,7 @@
 #include "stdlib.h"
 #include "windows.h"
 
-void get_div_by_dev(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...)
+void get_dividend_by_divisor(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...)
 {
     size_t *pIn;
     *ulOut = 0;
@@ -31,6 +31,47 @@ void get_div_by_dev(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x,
                 (*ulOut)++;
                 break;
             }
+        }
+    }
+}
+
+void get_divisor_by_dividend(size_t n, size_t *pOut, size_t *ulOut)
+{
+    *ulOut = 0;
+
+    if (n == 1)
+    {
+        if (pOut)
+            *pOut = 1;
+
+        *ulOut = 1;
+    }
+
+    if (n == 3)
+    {
+        if (pOut)
+        {
+            *pOut = 1;
+            pOut++;
+            *pOut = 3;
+        }
+
+        *ulOut = 2;
+    }
+
+    for (size_t i = 1; i < sqrt((double)n); ++i)
+    {
+        if (n%i == 0)
+        {
+            if (pOut)
+            {
+                *pOut = i;
+                pOut++;
+                *pOut = n/i;
+                pOut++;
+            }
+
+            (*ulOut) += 2;
         }
     }
 }

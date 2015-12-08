@@ -13,9 +13,9 @@ int main(int argc, char **argv)
     size_t *p;
     size_t len;
 
-	get_div_by_dev(1, 999, NULL, &len, 3, 5); 
+    get_dividend_by_divisor(1, 999, NULL, &len, 3, 5);
     p = (size_t*)malloc(sizeof(size_t) * len);
-	get_div_by_dev(1, 999, p, &len, 3, 5); 
+    get_dividend_by_divisor(1, 999, p, &len, 3, 5);
 
 	//—читаем сумму всех найденных чисел
 	size_t sum = 0;
