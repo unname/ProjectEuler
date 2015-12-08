@@ -23,7 +23,7 @@ int main(int argc, char **argv)
         }
     }
 
-    printf("Max_prime = %u\n", max_prime);
+    printf("\nMax prime = %Iu\n", max_prime);
 #endif
     return 0;
 }

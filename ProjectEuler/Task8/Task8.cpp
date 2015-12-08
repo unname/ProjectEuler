@@ -82,7 +82,7 @@ int main(int argc, char **argv)
         }
     }
  
-    printf("\nMax product = %u\n", max_product);
+    printf("\nMax product = %Iu\n", max_product);
 #endif
 
     return 0;

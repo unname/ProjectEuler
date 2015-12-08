@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 		sum += p[i];		
 	}
 	
-	printf("Sum = %u", sum);
+	printf("\nSum = %Iu\n", sum);
 
 	free(p);
 

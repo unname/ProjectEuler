@@ -10,7 +10,7 @@
 
 int main(int argc, char **argv)
 {
-    printf("\nAnswer: %u\n", 1 * 2 * 2 * 2 * 2 * 3 * 3 * 5 * 7 * 11 * 13 * 17 * 19);
+    printf("\nAnswer: %Iu\n", 1 * 2 * 2 * 2 * 2 * 3 * 3 * 5 * 7 * 11 * 13 * 17 * 19);
 
     return 0;
 }

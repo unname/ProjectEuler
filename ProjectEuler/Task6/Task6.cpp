@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
     sum2 = pow(sum2, 2);
 
-    printf("\nDifference = %u\n", sum2 - sum1);
+    printf("\nDifference = %Iu\n", sum2 - sum1);
 
     return 0;
 }

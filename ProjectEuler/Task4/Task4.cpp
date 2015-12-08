@@ -20,7 +20,7 @@ int main(int argc, char **argv)
                 if (j*i > Pol)
                     Pol = i*j;
 
-    printf("Palindrom = %u", Pol);
+    printf("\nPalindrom = %I\n", Pol);
 
     return 0;
 }

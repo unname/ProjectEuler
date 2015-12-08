@@ -20,13 +20,13 @@ int main(int argc, char **argv)
         {
             i++;
             if (i == 10001)
-                printf("\n%u prime is: %u\n",i, number);
+                printf("\n%llu prime is: %Iu\n",i, number);
         }
 
         number++;
     }
 
-    printf("\n%u prime is: %u\n", i, number-1);
+    printf("\n%llu prime is: %Iu\n", i, number-1);
 #endif
     return 0;
 }
