@@ -62,3 +62,10 @@ bool test_prime(size_t n);
 // b           - система счисления
 // return true - число полиндром
 bool test_palindrome(size_t n, size_t b);
+
+// [Task_13] - сложение строковых чисел
+//
+// n1 и n2 - исходные числа
+// sum     - результат сложения
+// length  - размер строки результата (с учётом terminate null)
+void sum_string(char* n1, char* n2, char* sum, size_t* length);

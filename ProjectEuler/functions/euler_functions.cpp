@@ -422,3 +422,58 @@ bool test_palindrome(size_t n, size_t b)
     free(digits);
     return result;
 }
+
+void sum_string(char* n1, char*  n2, char* sum, size_t* length)
+{
+    size_t offset = 0;
+
+    char* max_number;
+    char* min_number;
+    
+    if (strlen(n1) >= strlen(n2))
+    {
+        max_number = n1;
+        min_number = n2;
+    }
+    else
+    {
+        max_number = n2;
+        min_number = n1;
+    }
+
+    char* result = (char*)malloc(sizeof(char) * (strlen(max_number) + 1 + 1));
+
+    for (size_t i = 0; i < strlen(max_number); ++i)
+    {
+        if (i<strlen(min_number))
+            result[i] = max_number[strlen(max_number) - i - 1] + min_number[strlen(min_number) - i - 1] -'0' + offset;
+        else
+            result[i] = max_number[strlen(max_number) - i - 1] + offset;
+  
+        if (result[i] - '0' > 9)
+        {
+            result[i] -= 10;
+            offset = 1;
+        }
+        else
+            offset = 0;
+    }
+
+    if (offset == 1)
+    {   
+        result[strlen(max_number)] = 1 + '0';
+        *length = strlen(max_number) + 1 + 1;
+    }
+    else
+        *length = strlen(max_number) + 1;
+    
+    if (sum)
+    {
+        for (size_t i = 0; i < *length; ++i)
+            sum[i] = result[*length - i - 1 - 1];
+
+        sum[*length - 1] = '\0';
+    }
+
+    free(result);
+}
