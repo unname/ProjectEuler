@@ -76,7 +76,7 @@ void get_divisor_by_dividend(size_t n, size_t *pOut, size_t *ulOut)
     }
 }
 
-void fib_series(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start)
+void get_fibonacci(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start)
 {
     if (start)
     {
@@ -104,7 +104,7 @@ void fib_series(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, boo
 
     (*ulOut)++;
 
-    fib_series(n2, current_value, k, pOut, ulOut);
+    get_fibonacci(n2, current_value, k, pOut, ulOut);
 }
 
 void expansion_ds(size_t n, size_t *d, size_t *s)
@@ -133,7 +133,7 @@ void expansion_ds(size_t n, size_t *d, size_t *s)
     }
 }
 
-bool a_sprp(size_t n, size_t a)
+bool test_sprp(size_t n, size_t a)
 {
     // n is a strong probable-prime base a (an a-SPRP) if either a^d = 1 (mod n) or
     // (a^(d*2^r) = -1 (mod n) for some non-negative r less than s. 
@@ -340,16 +340,16 @@ bool test_prime(size_t n)
         return false;
 
     //2 è 3-SPRP
-    if (!a_sprp(n, 2))
+    if (!test_sprp(n, 2))
         return false;
-    if (!a_sprp(n, 3))
+    if (!test_sprp(n, 3))
         return false;
 
     if (n < 1373653)
         return true;
 
     //5-SPRP
-    if (!a_sprp(n, 5))
+    if (!test_sprp(n, 5))
         return false;
 
     if (n < 25326001)
@@ -359,14 +359,14 @@ bool test_prime(size_t n)
     if (n == 3215031751)
         return false;
 
-    if (!a_sprp(n, 7))
+    if (!test_sprp(n, 7))
         return false;
 
     if (n < 25000000000)
         return true;
 
     //11-SPRP
-    if (!a_sprp(n, 11))
+    if (!test_sprp(n, 11))
         return false;
 
     if (n < 2152302898747)
@@ -374,14 +374,14 @@ bool test_prime(size_t n)
 
 
     //13-SPRP
-    if (!a_sprp(n, 13))
+    if (!test_sprp(n, 13))
         return false;
 
     if (n < 3474749660383)
         return true;
 
     //17-SPRP
-    if (!a_sprp(n, 17))
+    if (!test_sprp(n, 17))
         return false;
 
     if (n < 341550071728321)
@@ -476,4 +476,31 @@ void sum_string(char* n1, char*  n2, char* sum, size_t* length)
     }
 
     free(result);
+}
+
+void get_ñollatz(size_t n, size_t *pOut, size_t *ulOut)
+{
+    *ulOut = 1;
+
+    if (pOut)
+    {
+        *pOut = n;
+        pOut++;
+    }
+
+    while (n != 1)
+    {
+        if (n % 2)
+            n = 3 * n + 1;
+        else
+            n = n / 2;
+
+        (*ulOut)++;
+
+        if (pOut)
+        {
+            *pOut = n;
+            pOut++;
+        }
+    }
 }

@@ -18,7 +18,7 @@ void get_divisor_by_dividend(size_t n, size_t *pOut, size_t *ulOut);
 // k            - верхний предел поиска
 // pOut и ulOut - массив найденых чисел и его размерность
 // start        - функция запускается первый раз (инициализация параметров)
-void fib_series(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start=false);
+void get_fibonacci(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start=false);
 
 
 // [Task_3] - возведение в степень по модулю
@@ -41,7 +41,7 @@ void expansion_ds(size_t n, size_t *d, size_t *s);
 // n           - исходное число
 // a           - основание вычислений
 // return true - число является a-SPRP 
-bool a_sprp(size_t n, size_t a);
+bool test_sprp(size_t n, size_t a);
 
 // [Task_3] - проверяет число n на отстутсвие простых (маленьких) делителей
 //
@@ -69,3 +69,9 @@ bool test_palindrome(size_t n, size_t b);
 // sum     - результат сложения
 // length  - размер строки результата (с учётом terminate null)
 void sum_string(char* n1, char* n2, char* sum, size_t* length);
+
+// [Task_14] - получить массив(и его размерность) чисел представляющих последовательность 'Коллатца' по заданому начальному
+//
+// n            - начальное значение
+// pOut и ulOut - массив чисел и его размерность
+void get_сollatz(size_t n, size_t *pOut, size_t *ulOut);
