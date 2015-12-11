@@ -47,19 +47,20 @@ void get_divisor_by_dividend(size_t n, size_t *pOut, size_t *ulOut)
         *ulOut = 1;
     }
 
-    if (n == 3)
+    if ((n == 2) || (n == 3))
     {
         if (pOut)
         {
             *pOut = 1;
             pOut++;
-            *pOut = 3;
+            *pOut = n;
         }
 
         *ulOut = 2;
     }
 
-    for (size_t i = 1; i < sqrt((double)n); ++i)
+
+    for (size_t i = 1; i <= sqrt((double)n); ++i)
     {
         if (n%i == 0)
         {
@@ -71,13 +72,73 @@ void get_divisor_by_dividend(size_t n, size_t *pOut, size_t *ulOut)
                 pOut++;
             }
 
-            (*ulOut) += 2;
+            if (i != n / i)
+                (*ulOut) += 2;
+            else
+                (*ulOut)++;
+        }
+    }
+}
+
+void get_divisor_by_dividend_prime(size_t n, size_t *pOut[2], size_t *ulOut)
+{
+    *ulOut = 0;
+
+    for (size_t i = 2; i <= sqrt((double)n); ++i)
+    {
+        if (n%i == 0)
+        {
+            if (test_prime(i))
+            {
+                if (pOut)
+                {
+                    size_t k = n;
+                    size_t exp_size = 0;
+
+                    while (k && (k%i == 0))
+                    {
+                        exp_size++;
+                        k /= i;
+                    }
+
+                    *(pOut[*ulOut]) = i;
+                    *(pOut[*ulOut] + 1) = exp_size;
+                }
+
+                (*ulOut)++;
+            }
+
+            if (n / i != i)
+            {
+                if (test_prime(n / i))
+                {
+                    if (pOut)
+                    {
+                        size_t k = n;
+                        size_t exp_size = 0;
+
+                        while (k && (k%i == 0))
+                        {
+                            exp_size++;
+                            k /= i;
+                        }
+
+                        *(pOut[*ulOut]) = n / i;
+                        *(pOut[*ulOut] + 1) = exp_size;
+                    }
+
+                    (*ulOut)++;
+                }
+            }
         }
     }
 }
 
 void get_fibonacci(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start)
 {
+    // Осторожно с большими значениями 
+    // рекурсия может привести к переполнению стэка 
+
     if (start)
     {
         if (pOut)
@@ -503,4 +564,59 @@ void get_сollatz(size_t n, size_t *pOut, size_t *ulOut)
             pOut++;
         }
     }
+}
+
+size_t factorial(size_t n, size_t k)
+{
+    if (n == 0)
+        return 1;
+
+    size_t res = 1;
+
+    for (; k <= n; ++k)
+    {
+        res *= k;
+    }
+
+    return res;
+}
+
+void factorial(size_t n, size_t *pOut[2], size_t *ulOut, size_t k)
+{
+    *(ulOut) = 0;
+
+    if (n == 0)
+    {
+        if (pOut)
+        {
+            *(pOut[*ulOut]) = 1;
+            *(pOut[*ulOut] + 1) = 1;
+
+            *(ulOut)++;
+        }
+    }
+
+    //TODO: возвращать факториал разложенный на простые
+    size_t res = 1;
+
+    for (; k <= n; ++k)
+    {
+        res *= k;
+    }
+}
+
+size_t binom_coeff(size_t n, size_t k)
+{
+    if (k > n)
+        return 0;
+
+    if (k == 0)
+        return 1;
+
+    if (k == 1)
+        return n;
+
+    //TODO: вызывать разложение на степени, затем сокращать, возвращать перемноженный остаток 
+
+    return factorial(n, max(k, n - k) + 1) / factorial(min(k, n - k));
 }

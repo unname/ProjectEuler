@@ -24,11 +24,10 @@ int main(int argc, char **argv)
 {
     size_t* p;
     size_t len = 0;
-    size_t number = 1;
     size_t max_len = 0;
     size_t max_number = 0;
 
-    while (number < 1000000)
+    for (size_t number = 1; number < 1000000; number++)
     {
         get_сollatz(number, NULL, &len);
         
