@@ -11,7 +11,7 @@
 
 int main(int argc, char **argv)
 {
-#ifdef _WIN64
+
     //size_t n = 16;
     //size_t res = 0;
 
@@ -27,21 +27,6 @@ int main(int argc, char **argv)
     //res *= 2;
 
     //printf("\n\nResult: %Iu\n", res);
-#endif
-
-
-    size_t size = 0;
-    get_divisor_by_dividend_prime(1404, NULL, &size);
-
-    size_t** arr = (size_t**)malloc(sizeof(size_t*) * size);
-    for (size_t i = 0; i < size; ++i)
-        arr[i] = (size_t*)malloc(sizeof(size_t) * 2);
-
-    get_divisor_by_dividend_prime(1404, arr, &size);
-
-    for (size_t i = 0; i < size; ++i)
-        free(arr[i]);
-    free(arr);
 
     return 0;
 }

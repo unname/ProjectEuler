@@ -84,6 +84,21 @@ void get_divisor_by_dividend_prime(size_t n, size_t *pOut[2], size_t *ulOut)
 {
     *ulOut = 0;
 
+    //Если число простое, то раскладывать его не требуется
+    if (test_prime(n))
+    {
+        if (pOut)
+        {
+            *(pOut[0]) = n;
+            *(pOut[0] + 1) = 1;
+        }
+
+        *ulOut = 1;
+
+        return;
+    }
+
+    //Для составных чисел ищем делители и их степень
     for (size_t i = 2; i <= sqrt((double)n); ++i)
     {
         if (n%i == 0)
@@ -596,13 +611,99 @@ void factorial(size_t n, size_t *pOut[2], size_t *ulOut, size_t k)
         }
     }
 
-    //TODO: возвращать факториал разложенный на простые
-    size_t res = 1;
+    //Динамический двумерный массив в котором будет аккумулироваться результат
+    size_t** output_primes = NULL;
+    size_t output_size = 0;
+    size_t new_output_size = 0;
 
     for (; k <= n; ++k)
     {
-        res *= k;
+        //Получаем разлажение на простые множетели для k-ого члена
+        size_t size = 0;
+
+        get_divisor_by_dividend_prime(k, NULL, &size);
+        
+        size_t** primes = (size_t**)malloc(sizeof(size_t*) * size);
+        for (size_t i = 0; i < size; ++i)
+            primes[i] = (size_t*)malloc(sizeof(size_t) * 2);
+
+        get_divisor_by_dividend_prime(k, primes, &size);
+
+
+        //Если разложили первый элемент, то копируем его разложение в массив с результатом
+        if (!output_primes)
+        {
+            output_size = size;
+
+            output_primes = (size_t**)malloc(sizeof(size_t*) * output_size);
+            for (size_t i = 0; i < output_size; ++i)
+                output_primes[i] = (size_t*)malloc(sizeof(size_t) * 2);
+
+            for (size_t i = 0; i < output_size; ++i)
+            {
+                output_primes[i][0] = primes[i][0];
+                output_primes[i][1] = primes[i][1];
+            }
+        }
+        else
+        {
+            //Если в массиве с результатом уже есть данные, то либо увеличиваем степени имеющихся,
+            //либо добавляем новые
+
+            new_output_size = output_size;
+
+            for (size_t p_cnt = 0; p_cnt < size; ++p_cnt)
+            {
+                for (size_t out_p_cnt = 0; out_p_cnt < output_size; ++out_p_cnt)
+                {
+                    //увеличиваем степень
+                    if (output_primes[out_p_cnt][0] == primes[p_cnt][0])
+                    {
+                        output_primes[out_p_cnt][1] += primes[p_cnt][1];
+                        break;
+                    }
+                    else
+                    {
+                        //добавляем новый элемент
+                        if (out_p_cnt == output_size - 1)
+                        {
+                            new_output_size++;
+
+                            output_primes = (size_t**)realloc(output_primes, sizeof(size_t*) * new_output_size);
+                            output_primes[new_output_size-1] = (size_t*)malloc(sizeof(size_t) * 2);
+
+                            output_primes[new_output_size-1][0] = primes[p_cnt][0];
+                            output_primes[new_output_size-1][1] = primes[p_cnt][1];
+                        }
+                    }
+                }
+            }
+
+            output_size = new_output_size;
+        }
+
+        //Освобождение памяти для массива с разложение текущего элемента
+        for (size_t i = 0; i < size; ++i)
+            free(primes[i]);
+        free(primes);
     }
+
+    //Если есть входной буфер, то копируем в него ответ
+    if (pOut)
+    {
+        for (size_t i = 0; i < output_size; ++i)
+        {
+            *(pOut[i])      = output_primes[i][0];
+            *(pOut[i] + 1)  = output_primes[i][1];
+        }
+    }
+
+    *ulOut = output_size; 
+
+    //Освобождение памяти для массива с результатом
+    for (size_t i = 0; i < output_size; ++i)
+        free(output_primes[i]);
+    free(output_primes);
 }
 
 size_t binom_coeff(size_t n, size_t k)
@@ -616,7 +717,13 @@ size_t binom_coeff(size_t n, size_t k)
     if (k == 1)
         return n;
 
-    //TODO: вызывать разложение на степени, затем сокращать, возвращать перемноженный остаток 
+
+    size_t size = 0;
+
+    factorial(n, NULL, &size, max(k, n - k) + 1);
+    factorial(min(k, n - k), NULL, &size);
+
+    //TODO: получить буферы, посчитать разность степеней и перемножить
 
     return factorial(n, max(k, n - k) + 1) / factorial(min(k, n - k));
 }
