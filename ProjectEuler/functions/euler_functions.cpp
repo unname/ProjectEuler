@@ -647,9 +647,8 @@ void factorial(size_t n, size_t *pOut[2], size_t *ulOut, size_t k)
         }
         else
         {
-            //Если в массиве с результатом уже есть данные, то либо увеличиваем степени имеющихся,
-            //либо добавляем новые
-
+            //Если в массиве с результатом уже есть найденный делитель, то увеличиваем его степень, иначе добавляем новый
+           
             new_output_size = output_size;
 
             for (size_t p_cnt = 0; p_cnt < size; ++p_cnt)
@@ -718,12 +717,56 @@ size_t binom_coeff(size_t n, size_t k)
         return n;
 
 
-    size_t size = 0;
+    size_t** numerator   = NULL;
+    size_t** denominator = NULL;
 
-    factorial(n, NULL, &size, max(k, n - k) + 1);
-    factorial(min(k, n - k), NULL, &size);
+    size_t n_size = 0;
+    size_t d_size = 0;
 
-    //TODO: получить буферы, посчитать разность степеней и перемножить
+    //Вычисляем числитель
+    factorial(n, NULL, &n_size, max(k, n - k) + 1);
 
-    return factorial(n, max(k, n - k) + 1) / factorial(min(k, n - k));
+    numerator = (size_t**)malloc(sizeof(size_t*) * n_size);
+    for (size_t i = 0; i < n_size; ++i)
+        numerator[i] = (size_t*)malloc(sizeof(size_t) * 2);
+
+    factorial(n, numerator, &n_size, max(k, n - k) + 1);
+
+    //Вычисляем знаменатель
+    factorial(min(k, n - k), NULL, &d_size);
+
+    denominator = (size_t**)malloc(sizeof(size_t*) * d_size);
+    for (size_t i = 0; i < d_size; ++i)
+        denominator[i] = (size_t*)malloc(sizeof(size_t) * 2);
+
+    factorial(min(k, n - k), denominator, &d_size);
+
+    //Вычисляем значение дроби
+    size_t result = 1;
+
+    for (size_t i = 0; i < n_size; ++i)
+    {
+        for (size_t j = 0; j < d_size; ++j)
+        {
+            if (numerator[i][0] == denominator[j][0])
+            {
+                result *= pow(numerator[i][0], (double)(numerator[i][1] - denominator[j][1]));
+                break;
+            }
+
+            if (j == d_size - 1)
+                result *= pow(numerator[i][0], (double)(numerator[i][1]));
+        }
+    }
+    
+    //Освобождение памяти
+    for (size_t i = 0; i < n_size; ++i)
+        free(numerator[i]);
+    free(numerator);
+
+    for (size_t i = 0; i < d_size; ++i)
+        free(denominator[i]);
+    free(denominator);
+
+    return result;
 }
