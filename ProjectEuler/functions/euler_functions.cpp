@@ -554,6 +554,91 @@ void sum_string(char* n1, char*  n2, char* sum, size_t* length)
     free(result);
 }
 
+void mult_string(char* n1, char* n2, char* mult, size_t* length)
+{
+    size_t n1_size = strlen(n1);
+    size_t n2_size = strlen(n2);
+
+    size_t interim_size = n1_size + n2_size;
+    char* interim_result = (char*)malloc(sizeof(char) * (interim_size + 1));
+   
+    size_t size = n1_size + n2_size;
+    char* result = (char*)malloc(sizeof(char) * (size + 1));
+
+    memset(result, '0', size);
+    result[size] = '\0';
+
+    for (size_t i = 0; i < n1_size; ++i)
+    {
+        size_t current_number = n1[n1_size - i - 1] - '0';
+        size_t offset = 0;
+
+        memset(interim_result, '0', interim_size);
+        interim_result[interim_size] = '\0';
+
+        for (size_t j = 0; j < n2_size; ++j)
+        {   
+            size_t current_mult = current_number * (n2[n2_size - j - 1] - '0') + offset;
+
+            offset = current_mult / 10;
+            interim_result[interim_size - i - j - 1] = (current_mult%10) + '0';
+        }
+
+        if (offset)
+        {
+            interim_result[interim_size - n2_size - i - 1] = offset + '0';
+        }
+
+        sum_string(result, interim_result, result, &size);
+    }
+
+    *length = size;
+
+    for (size_t i = 0; result[i] == '0'; ++i)
+    {
+        (*length)--;
+    }
+
+    if (mult)
+    {
+        for (size_t i = 0; i < *length; ++i)
+            mult[*length - 1 - i] = result[size - 1 - i];
+
+        mult[*length - 1] = '\0';
+    }
+
+    free(interim_result);
+    free(result);
+}
+
+void pow_string(char* n1, size_t n2, char* exp, size_t* length)
+{
+    size_t size = strlen(n1) + 1;
+    char* result = (char*)malloc(sizeof(char) * size);
+
+    for (size_t i = 0; i < size; ++i)
+    {
+        result[i] = n1[i];
+    }
+
+    for (size_t i = 0; i < n2 - 1; ++i)
+    {
+        mult_string(result, n1, NULL, &size);
+        result = (char*)realloc(result, sizeof(char) * size);
+        mult_string(result, n1, result, &size);
+    }
+
+    *length = size;
+
+    if (exp)
+    {
+        for (size_t i = 0; i < *length; ++i)
+            exp[i] = result[i];
+    }
+
+    free(result);
+}
+
 void get_ñollatz(size_t n, size_t *pOut, size_t *ulOut)
 {
     *ulOut = 1;

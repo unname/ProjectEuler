@@ -76,6 +76,21 @@ bool test_palindrome(size_t n, size_t b);
 // length  - размер строки результата (с учётом terminate null)
 void sum_string(char* n1, char* n2, char* sum, size_t* length);
 
+// [Task_16] - умножение строковых чисел
+//
+// n1 и n2 - исходные числа
+// sum     - результат умножения
+// length  - размер строки результата (с учётом terminate null)
+void mult_string(char* n1, char* n2, char* mult, size_t* length);
+
+// [Task_16] - возведение в степень строковых чисел
+//
+// n1      - строковое основание
+// n2      - числовая степень 
+// exp     - результат возведения
+// length  - размер строки результата (с учётом terminate null)
+void pow_string(char* n1, size_t n2, char* exp, size_t* length);
+
 // [Task_14] - получить массив(и его размерность) чисел представляющих последовательность 'Коллатца' по заданому начальному
 //
 // n            - начальное значение
