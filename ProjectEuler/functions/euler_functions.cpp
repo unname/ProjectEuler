@@ -46,6 +46,8 @@ void get_divisor_by_dividend(size_t n, size_t *pOut, size_t *ulOut)
             *pOut = 1;
 
         *ulOut = 1;
+
+		return;
     }
 
     if ((n == 2) || (n == 3))
@@ -58,8 +60,9 @@ void get_divisor_by_dividend(size_t n, size_t *pOut, size_t *ulOut)
         }
 
         *ulOut = 2;
-    }
 
+		return;
+    }
 
     for (size_t i = 1; i <= sqrt((double)n); ++i)
     {
@@ -69,8 +72,12 @@ void get_divisor_by_dividend(size_t n, size_t *pOut, size_t *ulOut)
             {
                 *pOut = i;
                 pOut++;
-                *pOut = n/i;
-                pOut++;
+
+				if (i != n / i)
+				{
+					*pOut = n / i;
+					pOut++;
+				}
             }
 
             if (i != n / i)
