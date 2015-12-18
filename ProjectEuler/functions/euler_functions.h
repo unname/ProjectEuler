@@ -91,6 +91,13 @@ void mult_string(char* n1, char* n2, char* mult, size_t* length);
 // length  - размер строки результата (с учётом terminate null)
 void pow_string(char* n1, size_t n2, char* exp, size_t* length);
 
+// [Task_20] - вычисление факториала в строковом виде
+//
+// n       - исходное значение
+// fact    - значение факториала
+// length  - размер строки результата (с учётом terminate null)
+void factorial_string(size_t n, char* fact, size_t* length);
+
 // [Task_14] - получить массив(и его размерность) чисел представляющих последовательность 'Коллатца' по заданому начальному
 //
 // n            - начальное значение
@@ -129,3 +136,10 @@ bool test_leapyear(size_t yy);
 // yy	  - год даты
 // return - номер длня недели
 size_t get_weekday(size_t dd, size_t mm, size_t yy);
+
+// [Task_20] - получить количество цыфр в числе;
+//
+// n      - исходное число
+// a      - основание числа
+// return - количество цыфр в числе
+size_t get_digitsize(size_t n, size_t a);

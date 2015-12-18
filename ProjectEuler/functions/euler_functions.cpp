@@ -2,6 +2,7 @@
 
 #include "math.h"
 #include "stdlib.h"
+#include "stdio.h"
 #include "windows.h"
 
 void get_dividend_by_divisor(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...)
@@ -639,6 +640,41 @@ void pow_string(char* n1, size_t n2, char* exp, size_t* length)
     free(result);
 }
 
+void factorial_string(size_t n, char* fact, size_t* length)
+{
+	if (n == 0)
+	{
+		if (fact)
+			fact = "1";
+		*length = 1;
+
+		return;
+	}
+
+	size_t size;
+	char* result		 = (char*)malloc(sizeof(char) * (get_digitsize(n, 10) + 1));
+	char* current_number = (char*)malloc(sizeof(char) * (get_digitsize(n, 10) + 1));
+
+	sprintf_s(result, get_digitsize(n, 10) + 1, "%Iu", n);
+
+	for (size_t i = 2; i < n; ++i)
+	{
+		sprintf_s(current_number, get_digitsize(i, 10) + 1, "%Iu", i);
+
+		mult_string(result, current_number, NULL, &size);
+		result = (char*)realloc(result, sizeof(char) * size);
+		mult_string(result, current_number, result, &size);
+	}
+
+	*length = size;
+
+	if (fact)
+	{
+		for (size_t i = 0; i < size; ++i)
+			fact[i] = result[i];
+	}
+}
+
 void get_ñollatz(size_t n, size_t *pOut, size_t *ulOut)
 {
     *ulOut = 1;
@@ -903,4 +939,20 @@ size_t get_weekday(size_t dd, size_t mm, size_t yy)
 	data_day_offset += dd - 1;
 	
 	return (first_day - 1 + data_day_offset) % 7 + 1;
+}
+
+size_t get_digitsize(size_t n, size_t a)
+{
+	if (!n)
+		return 1;
+
+	size_t result = 0;
+
+	while (n)
+	{
+		result++;
+		n /= a;
+	}
+
+	return result;
 }
