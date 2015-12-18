@@ -673,6 +673,9 @@ void factorial_string(size_t n, char* fact, size_t* length)
 		for (size_t i = 0; i < size; ++i)
 			fact[i] = result[i];
 	}
+
+	free(result);
+	free(current_number);
 }
 
 void get_ñollatz(size_t n, size_t *pOut, size_t *ulOut)

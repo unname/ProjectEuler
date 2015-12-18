@@ -27,5 +27,7 @@ int main(int argc, char **argv)
 
 	printf("\nDigit sum: %Iu\n", sum);
 
+	free(fact);
+
 	return 0;
 }
