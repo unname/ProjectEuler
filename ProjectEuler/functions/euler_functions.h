@@ -114,3 +114,18 @@ void factorial(size_t n, size_t *pOut[2], size_t *ulOut, size_t k = 2);
 // k - количество элементов в выборке
 // return - количество сочетаний из n по k
 size_t binom_coeff(size_t n, size_t k);
+
+// [Task_19] - проверить год на високосность
+//
+// yy	  - год 
+// return - true, если високосный
+bool test_leapyear(size_t yy);
+
+
+// [Task_19] - получить номер дня недели для указанной даты
+//
+// dd	  - день даты
+// mm	  - месяц даты
+// yy	  - год даты
+// return - номер длня недели
+size_t get_weekday(size_t dd, size_t mm, size_t yy);

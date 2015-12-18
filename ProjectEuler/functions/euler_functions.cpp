@@ -855,3 +855,52 @@ size_t binom_coeff(size_t n, size_t k)
 
     return result;
 }
+
+bool test_leapyear(size_t yy)
+{
+	if (yy % 400 == 0)
+		return true;
+	else
+		if (yy % 100 == 0)
+			return false;
+		else
+			if (yy % 4 == 0)
+				return true;
+			else
+				return false;
+}
+
+size_t get_weekday(size_t dd, size_t mm, size_t yy)
+{
+	size_t first_day = 1; // Первый день нашей эры (01.01.0001) был понедельником
+	size_t data_day_offset  = 0;
+
+	size_t months[12] =	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+	if (!dd || !mm || !yy)
+		return 0;
+
+	if (mm > 12)
+		return 0;
+
+	if (dd > months[mm - 1])
+		return 0;
+
+	if (mm == 2 && !test_leapyear(yy) && dd > 28)
+		return 0;
+
+
+	data_day_offset += (yy - 1) * 365 + ((yy - 1) / 4 - ((yy - 1) / 100 - (yy - 1) / 400));
+
+	for (size_t i = 0; i < mm - 1; ++i)
+	{
+		data_day_offset += months[i];
+
+		if (i == 1 && !test_leapyear(yy))
+			data_day_offset--;
+	}
+
+	data_day_offset += dd - 1;
+	
+	return (first_day - 1 + data_day_offset) % 7 + 1;
+}
