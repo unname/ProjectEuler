@@ -156,3 +156,17 @@ void read_file(char* filename, void* pOut, size_t *size);
 // strings - буфер с данными для сортировки
 // size    - размер буфера
 void sort(char** strings, size_t size);
+
+// [Task_23] - сортировка массива чисел
+//
+// numbers - буфер с данными для сортировки
+// size    - размер буфера
+void sort(size_t* numbers, size_t size);
+
+// [Task_23] - проверка, является ли число идеальным (perfect number)
+//
+// n	  - число для проверки
+// return - = 0, если число идеальное 
+//		    < 0, если число дефицитное (deficient number)
+//		    > 0, если число избыточное (abundant number)
+int test_perfect(size_t n);

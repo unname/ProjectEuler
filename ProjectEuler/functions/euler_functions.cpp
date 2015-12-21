@@ -1013,3 +1013,56 @@ void sort(char** strings, size_t size)
 		}
 	}
 }
+
+void sort(size_t* numbers, size_t size)
+{
+	if (size)
+	{
+		bool need_check = true;
+		size_t swap;
+
+		while (need_check)
+		{
+			need_check = false;
+
+			for (size_t i = 0; i < size - 1; ++i)
+			{
+				if (numbers[i] > numbers[i + 1])
+				{
+					swap = numbers[i];
+					numbers[i] = numbers[i + 1];
+					numbers[i + 1] = swap;
+
+					need_check = true;
+				}
+			}
+		}
+	}
+}
+
+int test_perfect(size_t n)
+{
+	size_t size = 0;
+
+	get_divisor_by_dividend(n, NULL, &size);
+	size_t* divisors = (size_t*)malloc(sizeof(size_t) * size);
+	get_divisor_by_dividend(n, divisors, &size);
+
+	size_t sum = 0;
+
+	for (size_t i = 0; i < size; ++i)
+	{
+		sum += divisors[i];
+	}
+
+	sum -= n;
+
+	if (sum == n)
+		return 0;
+	if (sum < n)
+		return -1;
+	if (sum > n)
+		return 1;
+
+	free(divisors);
+}
