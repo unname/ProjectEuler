@@ -966,3 +966,50 @@ size_t get_digitsize(size_t n, size_t a)
 
 	return result;
 }
+
+void read_file(char* filename, void* pOut, size_t *size)
+{
+	FILE* f;
+
+	fopen_s(&f, filename, "rb");
+	if (f)
+	{
+		fseek(f, 0, SEEK_END);
+		*size = ftell(f);
+		fseek(f, 0, SEEK_SET);
+		
+		if (pOut)
+		{
+			fread(pOut, 1, *size, f);
+			fclose(f);
+		}
+	}
+	else
+		printf("\nUnable to open file \"%s\".\n", filename);
+}
+
+void sort(char** strings, size_t size)
+{
+	if (size)
+	{
+		bool need_check = true;
+		char* swap;
+
+		while (need_check)
+		{
+			need_check = false;
+
+			for (size_t i = 0; i < size - 1; ++i)
+			{
+				if (strcmp(strings[i], strings[i + 1]) > 0)
+				{
+					swap = strings[i];
+					strings[i] = strings[i + 1];
+					strings[i + 1] = swap;
+
+					need_check = true;
+				}
+			}
+		}
+	}
+}

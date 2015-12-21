@@ -143,3 +143,16 @@ size_t get_weekday(size_t dd, size_t mm, size_t yy);
 // a      - основание числа
 // return - количество цыфр в числе
 size_t get_digitsize(size_t n, size_t a);
+
+// [Task_22] - чтение файла
+//
+// filename - имя файла
+// pOut		- буфер с данными файла
+// size		- размер буфера с данными
+void read_file(char* filename, void* pOut, size_t *size);
+
+// [Task_22] - сортировка массива строк
+//
+// strings - буфер с данными для сортировки
+// size    - размер буфера
+void sort(char** strings, size_t size);
