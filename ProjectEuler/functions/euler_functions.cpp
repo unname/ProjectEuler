@@ -1066,3 +1066,31 @@ int test_perfect(size_t n)
 
 	free(divisors);
 }
+
+void expansion_factorial(size_t n, size_t* factorials, size_t* size)
+{
+	*size = 0;
+
+	size_t n1 = n;
+
+	while (n1)
+	{
+		(*size)++;
+		n1 /= *size;
+	}
+
+	if (!n)
+		*size = 1;
+
+	if (factorials)
+	{
+		for (size_t i = *size - 1; i > 0; --i)
+		{
+			factorials[i] = n / factorial(i);
+
+			n %= factorial(i);
+		}
+
+		factorials[0] = 0;
+	}
+}

@@ -170,3 +170,11 @@ void sort(size_t* numbers, size_t size);
 //		    < 0, если число дефицитное (deficient number)
 //		    > 0, если число избыточное (abundant number)
 int test_perfect(size_t n);
+
+// [Task_24] - разложить число на сумму факториалов
+//
+// n	      - число для разложения
+// factorials - массив содержит множители факториалов, а номером факториала является индекс
+//			  - например разложение 17 = {0,1,2,2} == 0!*0 + 1!*1 + 2!*2 + 3!*2
+// size       - размер массива
+void expansion_factorial(size_t n, size_t* factorials, size_t* size);
