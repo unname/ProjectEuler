@@ -23,7 +23,7 @@ void get_divisor_by_dividend_prime(size_t n, size_t *pOut[2], size_t *ulOut);
 // n1 и n2      - элементы задающие последовательность
 // k            - верхний предел поиска
 // pOut и ulOut - массив найденых чисел и его размерность
-// start        - функци€ запускаетс€ первый раз (инициализаци€ параметров)
+// start        - true - функци€ запускаетс€ первый раз (инициализаци€ параметров)
 void get_fibonacci(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, bool start=false);
 
 
