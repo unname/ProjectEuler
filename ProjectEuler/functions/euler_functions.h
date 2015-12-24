@@ -69,6 +69,12 @@ bool test_prime(size_t n);
 // return true - число полиндром
 bool test_palindrome(size_t n, size_t b);
 
+// [Task_29] - проверяет является ли число n степенью другого числа
+//
+// n           - исходное число
+// return true - число является степенью другого
+bool test_power(size_t n, size_t* base = nullptr, size_t* power = nullptr);
+
 // [Task_13] - сложение строковых чисел
 //
 // n1 и n2 - исходные числа
@@ -155,7 +161,8 @@ void read_file(char* filename, void* pOut, size_t *size);
 //
 // strings - буфер с данными для сортировки
 // size    - размер буфера
-void sort(char** strings, size_t size);
+// num     - true, для сортировки строковых чисел
+void sort(char** strings, size_t size, bool numbers = false);
 
 // [Task_23] - сортировка массива чисел
 //

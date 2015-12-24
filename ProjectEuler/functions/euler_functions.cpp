@@ -93,7 +93,7 @@ void get_divisor_by_dividend_prime(size_t n, size_t *pOut[2], size_t *ulOut)
     *ulOut = 0;
 
     //Если число простое, то раскладывать его не требуется
-    if (test_prime(n))
+    if (test_prime(n) || n == 1 || n == 0)
     {
         if (pOut)
         {
@@ -505,6 +505,56 @@ bool test_palindrome(size_t n, size_t b)
 
     free(digits);
     return result;
+}
+
+bool test_power(size_t n, size_t* base, size_t* power)
+{
+    bool powered = true;
+
+    size_t size = 0;
+
+    if (base)
+        *base = 1;
+
+    get_divisor_by_dividend_prime(n, NULL, &size);
+
+    size_t** exponents = (size_t**)malloc(sizeof(size_t*) * size);
+    for (size_t i = 0; i < size; ++i)
+        exponents[i] = (size_t*)malloc(sizeof(size_t) * 2);
+
+    get_divisor_by_dividend_prime(n, exponents, &size);
+
+
+    for (size_t i = 0; i < size; ++i)
+    {
+        if (exponents[0][1] != exponents[i][1])
+        {
+            powered = false;
+            break;
+        }
+
+        if (base)
+            *base *= exponents[i][0];
+    }
+
+    if (powered && exponents[0][1] == 1)
+        powered = false;
+
+    if (base)
+        if (!powered)
+            *base = 0;
+
+    if (power)
+        if (powered)
+            *power = exponents[0][1];
+        else
+            *power = 0;
+
+    for (size_t i = 0; i < size; ++i)
+        free(exponents[i]);
+    free(exponents);
+
+    return powered;
 }
 
 void sum_string(char* n1, char*  n2, char* sum, size_t* length)
@@ -988,7 +1038,7 @@ void read_file(char* filename, void* pOut, size_t *size)
 		printf("\nUnable to open file \"%s\".\n", filename);
 }
 
-void sort(char** strings, size_t size)
+void sort(char** strings, size_t size, bool numbers)
 {
 	if (size)
 	{
@@ -1001,14 +1051,30 @@ void sort(char** strings, size_t size)
 
 			for (size_t i = 0; i < size - 1; ++i)
 			{
-				if (strcmp(strings[i], strings[i + 1]) > 0)
-				{
-					swap = strings[i];
-					strings[i] = strings[i + 1];
-					strings[i + 1] = swap;
+                if (numbers == false)
+                {
+                    if (strcmp(strings[i], strings[i + 1]) > 0)
+                    {
+                        swap = strings[i];
+                        strings[i] = strings[i + 1];
+                        strings[i + 1] = swap;
 
-					need_check = true;
-				}
+                        need_check = true;
+                    }
+                }
+                else
+                {
+                    if (strlen(strings[i]) > strlen(strings[i + 1]) ||
+                        strlen(strings[i]) == strlen(strings[i + 1]) &&
+                        strcmp(strings[i], strings[i + 1]) > 0)
+                    {
+                        swap = strings[i];
+                        strings[i] = strings[i + 1];
+                        strings[i + 1] = swap;
+
+                        need_check = true;
+                    }
+                }
 			}
 		}
 	}
