@@ -148,7 +148,7 @@ size_t get_weekday(size_t dd, size_t mm, size_t yy);
 // n      - исходное число
 // a      - основание числа
 // return - количество цыфр в числе
-size_t get_digitsize(size_t n, size_t a);
+size_t get_digitsize(size_t n, size_t a = 10);
 
 // [Task_22] - чтение файла
 //

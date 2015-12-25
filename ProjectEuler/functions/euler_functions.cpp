@@ -709,14 +709,14 @@ void factorial_string(size_t n, char* fact, size_t* length)
 	}
 
 	size_t size;
-	char* result		 = (char*)malloc(sizeof(char) * (get_digitsize(n, 10) + 1));
-	char* current_number = (char*)malloc(sizeof(char) * (get_digitsize(n, 10) + 1));
+	char* result		 = (char*)malloc(sizeof(char) * (get_digitsize(n) + 1));
+	char* current_number = (char*)malloc(sizeof(char) * (get_digitsize(n) + 1));
 
-	sprintf_s(result, get_digitsize(n, 10) + 1, "%Iu", n);
+	sprintf_s(result, get_digitsize(n) + 1, "%Iu", n);
 
 	for (size_t i = 2; i < n; ++i)
 	{
-		sprintf_s(current_number, get_digitsize(i, 10) + 1, "%Iu", i);
+		sprintf_s(current_number, get_digitsize(i) + 1, "%Iu", i);
 
 		mult_string(result, current_number, NULL, &size);
 		result = (char*)realloc(result, sizeof(char) * size);
