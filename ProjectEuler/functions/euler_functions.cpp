@@ -1080,7 +1080,7 @@ void sort(char** strings, size_t size, bool numbers)
 	}
 }
 
-void sort(size_t* numbers, size_t size)
+void sort(size_t* numbers, size_t size, bool reverse)
 {
 	if (size)
 	{
@@ -1093,14 +1093,28 @@ void sort(size_t* numbers, size_t size)
 
 			for (size_t i = 0; i < size - 1; ++i)
 			{
-				if (numbers[i] > numbers[i + 1])
-				{
-					swap = numbers[i];
-					numbers[i] = numbers[i + 1];
-					numbers[i + 1] = swap;
+                if (!reverse)
+                {
+                    if (numbers[i] > numbers[i + 1])
+                    {
+                        swap = numbers[i];
+                        numbers[i] = numbers[i + 1];
+                        numbers[i + 1] = swap;
 
-					need_check = true;
-				}
+                        need_check = true;
+                    }
+                }
+                else
+                {
+                    if (numbers[i] < numbers[i + 1])
+                    {
+                        swap = numbers[i];
+                        numbers[i] = numbers[i + 1];
+                        numbers[i + 1] = swap;
+
+                        need_check = true;
+                    }
+                }
 			}
 		}
 	}
@@ -1159,4 +1173,29 @@ void expansion_factorial(size_t n, size_t* factorials, size_t* size)
 
 		factorials[0] = 0;
 	}
+}
+
+size_t p(size_t n, size_t k[], size_t size)
+{
+    sort(k, size, true);
+
+    size_t result = 0;
+
+    while (true)
+    {
+        if (n < k[size - 1] || size == 1)
+            break;
+        
+        result += p(n, k+1, size-1);
+
+        if (n >= k[0])
+            n -= k[0];
+        else
+            break;
+    }
+   
+    if (n % k[0] == 0 || n == 0)
+        result++;
+
+    return result;
 }

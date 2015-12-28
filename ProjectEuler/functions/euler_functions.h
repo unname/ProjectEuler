@@ -168,7 +168,7 @@ void sort(char** strings, size_t size, bool numbers = false);
 //
 // numbers - буфер с данными дл€ сортировки
 // size    - размер буфера
-void sort(size_t* numbers, size_t size);
+void sort(size_t* numbers, size_t size, bool reverse = false);
 
 // [Task_23] - проверка, €вл€етс€ ли число идеальным (perfect number)
 //
@@ -185,3 +185,11 @@ int test_perfect(size_t n);
 //			  - например разложение 17 = {0,1,2,2} == 0!*0 + 1!*1 + 2!*2 + 3!*2
 // size       - размер массива
 void expansion_factorial(size_t n, size_t* factorials, size_t* size);
+
+// [Task_31] - рекуретна€ формула дл€ подсЄчта количества неупор€доченных разбиений числа на слогаемые
+//
+// n      - исходное число дл€ разбиени€
+// k[]    - массив с элементами разбиени€
+// size   - размерность массива
+// return - количество неупор€доченных разбиений
+size_t p(size_t n, size_t k[], size_t size);
