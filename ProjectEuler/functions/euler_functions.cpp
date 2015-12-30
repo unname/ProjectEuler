@@ -1199,3 +1199,32 @@ size_t p(size_t n, size_t k[], size_t size)
 
     return result;
 }
+
+size_t gcd(size_t n, size_t m)
+{
+    if (!n || !m)
+        return 1;
+
+    size_t r1 = max(n, m) % min(n, m);
+
+    if (r1 == 0)
+        return min(n, m);
+
+    size_t r2 = min(n, m) % r1;
+
+    if (r2 == 0)
+        return r1;
+
+    while (r1 && r2)
+    {
+        if (r1 % r2 == 0)
+            return r2;
+        r1 %= r2;
+
+        if (r2 % r1 == 0)
+            return r1;
+        r2 %= r1;
+    }
+
+    return 0;
+}

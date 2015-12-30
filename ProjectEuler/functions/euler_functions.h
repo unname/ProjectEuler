@@ -193,3 +193,10 @@ void expansion_factorial(size_t n, size_t* factorials, size_t* size);
 // size   - размерность массива
 // return - количество неупорядоченных разбиений
 size_t p(size_t n, size_t k[], size_t size);
+
+// [Task_33] - поиск наибольшего общего делителя
+//
+// n      - первое число
+// m      - второе число
+// return - НОД
+size_t gcd(size_t n, size_t m);
