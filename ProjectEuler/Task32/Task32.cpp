@@ -13,35 +13,6 @@
 //
 // HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
 
-bool test_pandigital_product(size_t a, size_t b)
-{
-    size_t c = 0;
-    c = a * b;
-
-    if (get_digitsize(a) + get_digitsize(b) + get_digitsize(c) != 9)
-        return false;
-
-    size_t result = 0;
-
-    while (a || b || c)
-    {
-        if (a % 10)
-            result |= 1 << (a % 10 - 1);
-        if (b % 10)
-            result |= 1 << (b % 10 - 1);
-        if (c % 10)
-            result |= 1 << (c % 10 - 1);
-
-        a /= 10;
-        b /= 10;
-        c /= 10;
-    }
-
-    if (result == 0x1FF)
-        return true;
-    else
-        return false;
-}
 
 int main(int argc, char **argv)
 {
@@ -52,7 +23,7 @@ int main(int argc, char **argv)
     {
         for (size_t b = 1000; b < 10000; ++b)
         {
-            if (test_pandigital_product(a, b))
+            if (test_pandigital(a, b))
             {
                 size++;
                 products = (size_t*)realloc(products, sizeof(size_t) * size);
@@ -69,7 +40,7 @@ int main(int argc, char **argv)
     {
         for (size_t b = 100; b < 1000; ++b)
         {
-            if (test_pandigital_product(a, b))
+            if (test_pandigital(a, b))
             {
                 size++;
                 products = (size_t*)realloc(products, sizeof(size_t) * size);

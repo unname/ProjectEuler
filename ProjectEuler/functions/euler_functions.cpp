@@ -1228,3 +1228,54 @@ size_t gcd(size_t n, size_t m)
 
     return 0;
 }
+
+bool test_pandigital(size_t a, size_t b)
+{
+    size_t c = 0;
+    c = a * b;
+
+    if (get_digitsize(a) + get_digitsize(b) + get_digitsize(c) != 9)
+        return false;
+
+    size_t result = 0;
+
+    while (a || b || c)
+    {
+        if (a % 10)
+            result |= 1 << (a % 10 - 1);
+        if (b % 10)
+            result |= 1 << (b % 10 - 1);
+        if (c % 10)
+            result |= 1 << (c % 10 - 1);
+
+        a /= 10;
+        b /= 10;
+        c /= 10;
+    }
+
+    if (result == 0x1FF)
+        return true;
+    else
+        return false;
+}
+
+bool test_pandigital(size_t a)
+{
+    if (get_digitsize(a) != 9)
+        return false;
+
+    size_t result = 0;
+
+    while (a)
+    {
+        if (a % 10)
+            result |= 1 << (a % 10 - 1);
+
+        a /= 10;
+    }
+
+    if (result == 0x1FF)
+        return true;
+    else
+        return false;
+}

@@ -200,3 +200,11 @@ size_t p(size_t n, size_t k[], size_t size);
 // m      - второе число
 // return - НОД
 size_t gcd(size_t n, size_t m);
+
+// [Task_32] - проверка числа на pandigital
+//
+// a      - проверяемое число
+// a и b  - множетели для проверки (a * b = c) - pandigital triplet
+// return true - если число/произведение является pandigital
+bool test_pandigital(size_t a);
+bool test_pandigital(size_t a, size_t b);
