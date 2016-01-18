@@ -203,8 +203,23 @@ size_t gcd(size_t n, size_t m);
 
 // [Task_32] - проверка числа на pandigital
 //
-// a      - проверяемое число
-// a и b  - множетели для проверки (a * b = c) - pandigital triplet
+// n           - проверяемое число
+// a и b       - множетели для проверки (a * b = c) - pandigital triplet
 // return true - если число/произведение является pandigital
-bool test_pandigital(size_t a);
-bool test_pandigital(size_t a, size_t b);
+bool test_pandigital(size_t n);
+bool test_pandigital(size_t n, size_t b);
+
+// [Task_41] - проверка числа на n-digit pandigital
+//
+// n           - проверяемое число
+// return true - если число/произведение является n-digit pandigital
+bool test_pandigital_n(size_t n);
+
+// [Task_24] - получаем лексикографическую перестановку по заданному массиву и номеру перестановки
+//
+// digits - массив чисел задающий элементы перестановки
+// digits - размер массива чисел
+// n      - номер перестановки (отсчёт перестановок начинается с 0)
+// log    - true: вывод дополнительные данных
+// return - лексикографическая перестановка с порядковым номером 'n'
+size_t get_lex_permut(size_t* digits, size_t digits_size, size_t n, bool log = false);

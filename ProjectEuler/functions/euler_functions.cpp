@@ -1259,23 +1259,102 @@ bool test_pandigital(size_t a, size_t b)
         return false;
 }
 
-bool test_pandigital(size_t a)
+bool test_pandigital(size_t n)
 {
-    if (get_digitsize(a) != 9)
+    if (get_digitsize(n) != 9)
         return false;
 
     size_t result = 0;
 
-    while (a)
+    while (n)
     {
-        if (a % 10)
-            result |= 1 << (a % 10 - 1);
+        if (n % 10)
+            result |= 1 << (n % 10 - 1);
 
-        a /= 10;
+        n /= 10;
     }
 
     if (result == 0x1FF)
         return true;
     else
         return false;
+}
+
+bool test_pandigital_n(size_t n)
+{
+    size_t expections[] = { 0x1, 0x3, 0x7, 0xF, 0x1F, 0x3F, 0x7F, 0xFF, 0x1FF };
+    size_t expection = expections[get_digitsize(n) - 1];
+
+    size_t result = 0;
+
+    while (n)
+    {
+        if (n % 10)
+        {
+            if (result & (1 << (n % 10 - 1)))
+                return false;
+            else
+                result |= 1 << (n % 10 - 1);
+        }
+        else
+            return false;
+
+        n /= 10;
+    }
+
+    if (result == expection)
+        return true;
+    else
+        return false;
+}
+
+size_t get_lex_permut(size_t* digits, size_t digits_size, size_t n, bool log)
+{
+    sort(digits, digits_size);
+
+    size_t size = 0;
+    expansion_factorial(n, NULL, &size);
+    size_t* fact = (size_t*)malloc(sizeof(size_t) * size);
+    expansion_factorial(n, fact, &size);
+
+    if (log)
+    {
+        printf("\n%Iu = ", n);
+        for (int i = size - 1; i >= 0; --i)
+            if (fact[i])
+                printf("%i!*%Iu + ", i, fact[i]);
+        printf("\n");
+    }
+
+    size_t* used_digits = NULL;
+    size_t used_size = 0;
+    size_t result = 0;
+    size_t* current_digit = 0;
+
+    for (int i = digits_size - 1; i >= 0; --i)
+    {
+        if (i < size)
+            current_digit = digits + fact[i];
+        else
+            current_digit = digits;
+
+        for (size_t j = 0; j < used_size; ++j)
+        {
+            if (current_digit[0] >= used_digits[j])
+                current_digit++;
+        }
+
+        result += current_digit[0] * pow(10, (double)i);
+
+        used_size++;
+        used_digits = (size_t*)realloc(used_digits, sizeof(size_t) * used_size);
+        used_digits[used_size - 1] = current_digit[0];
+
+        sort(used_digits, used_size);
+    }
+
+    free(used_digits);
+    free(fact);
+
+    return result;
 }
