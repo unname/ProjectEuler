@@ -24,9 +24,6 @@ int main(int argc, char **argv)
 
             size_t n = get_lex_permut(digits, size, serial_number);
 
-            if (n % 2 == 0)
-                continue;
-
             if (test_prime(n))
             {
                 printf("\nResult: %Iu\n", n);
@@ -35,5 +32,6 @@ int main(int argc, char **argv)
         } while (serial_number != 0);
     }
 #endif
+
     return 0;
 }
