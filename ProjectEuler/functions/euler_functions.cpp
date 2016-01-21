@@ -513,10 +513,17 @@ bool test_power(size_t n, size_t* base, size_t* power)
 
     size_t size = 0;
 
-    if (base)
-        *base = 1;
-
     get_divisor_by_dividend_prime(n, NULL, &size);
+    
+    if (!size)
+    {
+        if (power)
+            *power = 0;
+        if (base)
+            *base = 0;
+
+        return false;
+    }
 
     size_t** exponents = (size_t**)malloc(sizeof(size_t*) * size);
     for (size_t i = 0; i < size; ++i)
@@ -524,6 +531,8 @@ bool test_power(size_t n, size_t* base, size_t* power)
 
     get_divisor_by_dividend_prime(n, exponents, &size);
 
+    if (base)
+        *base = 1;
 
     for (size_t i = 0; i < size; ++i)
     {

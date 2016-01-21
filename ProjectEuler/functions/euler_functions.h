@@ -35,7 +35,7 @@ void get_fibonacci(size_t n1, size_t n2, size_t k, size_t *pOut, size_t *ulOut, 
 // return - остаток деления (результат)
 size_t pow_mod(size_t n, size_t e, size_t m);
 
-// [Task_3] - находит представление числа в формате n = 2^s*d+1
+// [Task_3] - находит представление числа в формате n = 2^s * d + 1
 //
 // n - исходное число
 // d - найденный множитель
