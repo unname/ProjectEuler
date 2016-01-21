@@ -36,7 +36,7 @@ int main(int argc, char **argv)
     size_t* pentagonals = (size_t* )malloc(sizeof(size_t));
     pentagonals[0] = 1;
 
-    size_t min_pentagonal_dif = -1;
+    size_t min_pentagonal_dif = SIZE_MAX;
 
     for (size_t n = 2; ; ++n)
     {
@@ -118,7 +118,7 @@ solution_2:
 
     for (size_t i = 0;; ++i)
     {
-        //Если разница между двумя последними пентагональными элементами больше минимально найденного D,
+        // Если разница между двумя последними пентагональными элементами больше минимально найденного D,
         // то дальше искать нет смысла, так как она будет только увеличиваться
         if (3 * i + 1 > Dmin)
             goto end;
