@@ -900,7 +900,7 @@ size_t binom_coeff(size_t n, size_t k)
     if (k > n)
         return 0;
 
-    if (k == 0)
+    if (k == 0 || k == n)
         return 1;
 
     if (k == 1)
