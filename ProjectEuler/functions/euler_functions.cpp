@@ -476,6 +476,9 @@ bool test_prime(size_t n)
 
 bool test_palindrome(size_t n, size_t b)
 {
+    if (!b)
+        return false;
+
     size_t capacity = 0;
     size_t n1 = n;
     bool result = true;
@@ -504,6 +507,25 @@ bool test_palindrome(size_t n, size_t b)
     }
 
     free(digits);
+    return result;
+}
+
+bool test_palindrome(char* n, size_t size)
+{
+    if (!size)
+        return false;
+
+    bool result = true;
+
+    for (size_t i = 0; i < size / 2; ++i)
+    {
+        if (n[i] != n[size - 1 - i])
+        {
+            result = false;
+            break;
+        }
+    }
+
     return result;
 }
 

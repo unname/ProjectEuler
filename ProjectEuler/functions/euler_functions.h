@@ -68,6 +68,7 @@ bool test_prime(size_t n);
 // b           - система счисления
 // return true - число полиндром
 bool test_palindrome(size_t n, size_t b);
+bool test_palindrome(char* n, size_t size);
 
 // [Task_29] - проверяет является ли число n степенью другого числа
 //
