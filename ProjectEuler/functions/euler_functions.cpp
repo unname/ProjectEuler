@@ -643,6 +643,88 @@ void sum_string(char* n1, char*  n2, char* sum, size_t* length)
     free(result);
 }
 
+void sub_string(char* n1, char*  n2, char* sub, size_t* length)
+{
+    size_t offset = 0;
+
+    char* max_number;
+    char* min_number;
+
+    if (strcmp(n1, n2) >= 0)
+    {
+        max_number = n1;
+        min_number = n2;
+    }
+    else
+    {
+        max_number = n2;
+        min_number = n1;
+    }
+
+    if ((strlen(n1) == 1 && n1[0] == '0') || (strlen(n2) == 1 && n2[0] == '0'))
+    {
+        *length = strlen(max_number) + 1;
+        
+        if (sub)
+        {
+            strcpy_s(sub, *length, max_number);
+        }
+
+        return;
+    }
+
+    char* result = (char*)malloc(sizeof(char) * (strlen(max_number) + 1));
+
+    for (size_t i = 0; i < strlen(max_number); ++i)
+    {
+        if (i < strlen(min_number))
+        {   
+            if (max_number[strlen(max_number) - i - 1] - offset >= min_number[strlen(min_number) - i - 1])
+            {
+                result[i] = max_number[strlen(max_number) - i - 1] - min_number[strlen(min_number) - i - 1] - offset + '0';
+                offset = 0;
+            }
+            else
+            {
+                result[i] = 10 - (min_number[strlen(min_number) - i - 1] - max_number[strlen(max_number) - i - 1]) - offset + '0';
+                offset = 1;
+            }
+        }
+        else
+        {
+            if (max_number[strlen(max_number) - i - 1])
+            {
+                result[i] = max_number[strlen(max_number) - i - 1] - offset;
+                offset = 0;
+            }
+            else
+            {
+                if (offset)
+                    result[i] = 10 - max_number[strlen(max_number) - i - 1];
+            }
+        }
+    }
+
+    *length = strlen(max_number);
+    while (*length > 0 && result[*length - 1] == '0')
+        (*length)--;
+
+    if (*length)
+        *length += 1;
+    else
+        *length += 2;
+
+    if (sub)
+    {
+        for (size_t i = 0; i < *length - 1; ++i)
+            sub[i] = result[*length - i - 1 - 1];
+
+        sub[*length - 1] = '\0';
+    }
+
+    free(result);
+}
+
 void mult_string(char* n1, char* n2, char* mult, size_t* length)
 {
     size_t n1_size = strlen(n1);

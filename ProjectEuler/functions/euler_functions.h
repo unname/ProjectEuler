@@ -83,6 +83,13 @@ bool test_power(size_t n, size_t* base = nullptr, size_t* power = nullptr);
 // length  - размер строки результата (с учётом terminate null)
 void sum_string(char* n1, char* n2, char* sum, size_t* length);
 
+// [Task_13] - вычитание строковых чисел
+//
+// n1 и n2 - исходные числа
+// sub     - результат вычитания
+// length  - размер строки результата (с учётом terminate null)
+void sub_string(char* n1, char* n2, char* sub, size_t* length);
+
 // [Task_16] - умножение строковых чисел
 //
 // n1 и n2 - исходные числа
