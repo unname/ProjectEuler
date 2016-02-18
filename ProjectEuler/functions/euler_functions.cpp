@@ -1471,3 +1471,29 @@ size_t get_lex_permut(size_t* digits, size_t digits_size, size_t n, bool log)
 
     return result;
 }
+
+bool test_permut(size_t n1, size_t n2)
+{
+    if (get_digitsize(n1) != get_digitsize(n2))
+        return false;
+
+    size_t digits1[10] = { 0 };
+    size_t digits2[10] = { 0 };
+
+    while (n1)
+    {
+        digits1[n1 % 10]++;
+        digits2[n2 % 10]++;
+
+        n1 /= 10;
+        n2 /= 10;
+    }
+   
+    for (size_t i = 0; i < 10; ++i)
+    {
+        if (digits1[i] != digits2[i])
+            return false;
+    }
+
+    return true;
+}

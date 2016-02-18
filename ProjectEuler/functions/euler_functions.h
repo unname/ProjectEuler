@@ -231,3 +231,9 @@ bool test_pandigital_n(size_t n);
 // log    - true: вывод дополнительные данных
 // return - лексикографическая перестановка с порядковым номером 'n'
 size_t get_lex_permut(size_t* digits, size_t digits_size, size_t n, bool log = false);
+
+// [Task_62] - проверяем являются ли представленные числа взаимными перестановками
+//
+// n, ... - перечень проверяемых чисел 
+// return - true если все представленые числа являются взаимными перестановками
+bool test_permut(size_t n1, size_t n2);
