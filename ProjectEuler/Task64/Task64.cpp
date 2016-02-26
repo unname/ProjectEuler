@@ -57,32 +57,26 @@ int main(int argc, char **argv)
         if (n_sqr * n_sqr == number)
             continue;
 
-        int numerator_c = 1;
-        int denominator_c = n_sqr;
-        size_t a_coeff = 1;
+        size_t fraction_size = 0;
 
-        size_t period_length = 0;
-#ifdef _DEBUG
-        printf(" sqr(%Iu) = [%Iu; (", number, n_sqr);
-#endif
-        do
-        {
-            period_length++;
-
-            numerator_c = (number - denominator_c * denominator_c) / numerator_c;
-                
-            a_coeff = (n_sqr + denominator_c) / numerator_c;
-#ifdef _DEBUG
-            printf("%Iu, ", a_coeff);
-#endif
-            denominator_c = numerator_c * a_coeff - denominator_c;
-
-        } while (numerator_c != 1 || denominator_c != n_sqr);
+        get_continued_fraction(number, nullptr, &fraction_size);
 
 #ifdef _DEBUG
-        printf(")]\n");
+        size_t* fraction = (size_t*)malloc(sizeof(size_t) * fraction_size);
+
+        get_continued_fraction(number, fraction, &fraction_size);
+
+        printf(" sqr(%Iu) = [%Iu; (", number, fraction[0]);
+
+        for (size_t i = 1; i < fraction_size; ++i)
+         printf("%Iu, ", fraction[i]);
+
+        printf(")\n");
+
+        free(fraction);
 #endif
-        if (period_length % 2)
+
+        if ((fraction_size - 1) % 2)
             result++;
     }
 

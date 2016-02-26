@@ -4,6 +4,7 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "windows.h"
+#include <iostream>
 
 void get_dividend_by_divisor(size_t k1, size_t k2, size_t *pOut, size_t *ulOut, size_t x, ...)
 {
@@ -1496,4 +1497,115 @@ bool test_permut(size_t n1, size_t n2)
     }
 
     return true;
+}
+
+void get_continued_fraction(size_t number, size_t* fraction, size_t* fraction_size)
+{
+    size_t n_sqr = (size_t)sqrt(number);
+
+    if (n_sqr * n_sqr == number || number < 2)
+        return;
+
+    if (fraction_size == nullptr)
+        return;
+
+    *fraction_size = 1;
+
+    size_t numerator_c = 1;
+    size_t denominator_c = n_sqr;
+
+    size_t a_coeff = 1;
+
+    if (fraction)
+        fraction[0] = n_sqr;
+
+    do
+    {
+        numerator_c = (number - denominator_c * denominator_c) / numerator_c;
+
+        a_coeff = (n_sqr + denominator_c) / numerator_c;
+
+        denominator_c = numerator_c * a_coeff - denominator_c;
+
+        (*fraction_size)++;
+
+        if (fraction)
+            fraction[*fraction_size - 1] = a_coeff;
+
+    } while (numerator_c != 1 || denominator_c != n_sqr);
+}
+
+
+void get_convergent(size_t number, size_t approx_degree, char* out_numerator, size_t* out_num_size, char* out_denominator, size_t* out_den_size)
+{
+    if (number < 2 || approx_degree < 1 || out_num_size == nullptr || out_den_size == nullptr)
+        return;
+
+    size_t fraction_size = 0;
+
+    get_continued_fraction(number, nullptr, &fraction_size);
+    size_t* fraction = (size_t*)malloc(sizeof(size_t) * fraction_size);
+    get_continued_fraction(number, fraction, &fraction_size);
+
+    if (fraction_size < 2)
+        return;
+
+    char* numerator = (char*)malloc(sizeof(char) * 2);
+    sprintf_s(numerator, 2, "%Iu", 1);
+
+    size_t a_start = fraction[(approx_degree - 1) % (fraction_size - 1) + 1];
+
+    char* denominator = (char*)malloc(sizeof(char) * (get_digitsize(a_start) + 1));
+    sprintf_s(denominator, get_digitsize(a_start) + 1, "%Iu", a_start);
+
+    for (size_t i = approx_degree; i > 0; --i)
+    {
+        size_t length = 0;
+
+        size_t a_coeff;
+
+        if (i == 1)
+            a_coeff = fraction[0];
+        else
+            a_coeff = fraction[(i - 2) % (fraction_size - 1) + 1];
+
+        //numerator += denominator;
+        for (size_t k = 0; k < a_coeff; ++k)
+        {
+            sum_string(numerator, denominator, NULL, &length);
+            numerator = (char*)realloc(numerator, sizeof(char) * length);
+            sum_string(numerator, denominator, numerator, &length);
+        }
+
+        //size_t n = numerator;
+        //numerator = denominator;
+        //denominator = n;
+        char* tmp = (char*)malloc(sizeof(char) * (strlen(numerator) + 1));
+        strcpy_s(tmp, strlen(numerator) + 1, numerator);
+
+        numerator = (char*)realloc(numerator, sizeof(char) * (strlen(denominator) + 1));
+        strcpy_s(numerator, strlen(denominator) + 1, denominator);
+
+        denominator = (char*)realloc(denominator, sizeof(char) * (strlen(tmp) + 1));
+        strcpy_s(denominator, strlen(tmp) + 1, tmp);
+
+        free(tmp);
+    }
+
+    //так как апоследний шаг итерации подсчёта - это переворачивание дроби
+    *out_num_size = strlen(denominator) + 1;
+    *out_den_size = strlen(numerator) + 1;
+
+    if (out_numerator)
+        strcpy_s(out_numerator, *out_num_size, denominator);
+
+    if (out_denominator)
+        strcpy_s(out_denominator, *out_den_size, numerator);
+
+    if (numerator)
+        free(numerator);
+    if (denominator)
+        free(denominator);
+    if (fraction)
+        free(fraction);
 }
