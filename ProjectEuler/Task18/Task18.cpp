@@ -37,7 +37,6 @@
 
 int main(int argc, char **argv)
 {
-
     size_t triangle[][15] =
     {
         { 75 },
