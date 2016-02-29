@@ -247,10 +247,16 @@ void get_continued_fraction(size_t number, size_t* fraction, size_t* fraction_si
 
 // [Task_66, function based on 57, 64, 65 tasks] - разложение квадратного корня представленного числа в приближённую дробь (цепные дроби)
 //
-// number        - число, для корня которого строится приближение
+// number        - число, для квадратного корня которого строится приближение
 // approx_degree - степень приближения (точность дроби)
 // numerator     - числитель дроби 
 // num_size      - размер числителя (с terminated null)
 // denominator   - знаминатель дроби
 // den_size      - размер знаминателя (с terminated null)
 void get_convergent(size_t number, size_t convergent_degree, char* numerator, size_t* num_size, char* denominator, size_t* den_size);
+
+// [Task69] - функция эйлера (фи-функция)
+//
+// n - входное число
+// return -  количеству натуральных чисел, меньших n и взаимно простых с ним. 
+size_t phi(size_t n);

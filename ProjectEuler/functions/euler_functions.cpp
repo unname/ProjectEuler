@@ -1535,7 +1535,6 @@ void get_continued_fraction(size_t number, size_t* fraction, size_t* fraction_si
     } while (numerator_c != 1 || denominator_c != n_sqr);
 }
 
-
 void get_convergent(size_t number, size_t approx_degree, char* out_numerator, size_t* out_num_size, char* out_denominator, size_t* out_den_size)
 {
     if (number < 2 || approx_degree < 1 || out_num_size == nullptr || out_den_size == nullptr)
@@ -1608,4 +1607,37 @@ void get_convergent(size_t number, size_t approx_degree, char* out_numerator, si
         free(denominator);
     if (fraction)
         free(fraction);
+}
+
+size_t phi(size_t n)
+{
+    if (n < 2)
+        return 0;
+
+    if (test_prime(n))
+        return n - 1;
+
+    size_t primes_count = 0;
+
+    get_divisor_by_dividend_prime(n, nullptr, &primes_count);
+
+    size_t** primes = (size_t**)malloc(sizeof(size_t*) * primes_count);
+    for (size_t i = 0; i < primes_count; ++i)
+        primes[i] = (size_t*)malloc(sizeof(size_t) * 2);
+
+    get_divisor_by_dividend_prime(n, primes, &primes_count);
+    
+    size_t result = n;
+
+    for (size_t i = 0; i < primes_count; ++i)
+    {
+        result *= primes[i][0] - 1;
+        result /= primes[i][0];
+    }
+
+    for (size_t i = 0; i < primes_count; ++i)
+        free(primes[i]);
+    free(primes);
+
+    return result;
 }
