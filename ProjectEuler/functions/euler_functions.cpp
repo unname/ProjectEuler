@@ -1611,8 +1611,11 @@ void get_convergent(size_t number, size_t approx_degree, char* out_numerator, si
 
 size_t phi(size_t n)
 {
-    if (n < 2)
+    if (n == 0)
         return 0;
+
+    if (n == 1)
+        return 1;
 
     if (test_prime(n))
         return n - 1;
