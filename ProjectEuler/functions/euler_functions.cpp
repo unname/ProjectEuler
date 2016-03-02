@@ -1621,9 +1621,6 @@ size_t phi(size_t n)
     if (n == 1)
         return 1;
 
-    if (test_prime(n))
-        return n - 1;
-
     size_t primes_count = 0;
 
     get_divisor_by_dividend_prime(n, nullptr, &primes_count);

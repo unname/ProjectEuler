@@ -11,8 +11,8 @@
 int main(int argc, char **argv)
 {
 #ifdef _WIN64
-    size_t i = 0;
-    size_t number = 2;
+    size_t i = 1;
+    size_t number = 3;
 
     while (i < 1000000)
     {
@@ -20,13 +20,13 @@ int main(int argc, char **argv)
         {
             i++;
             if (i == 10001)
-                printf("\n%llu prime is: %Iu\n",i, number);
+                printf("\n%Iu prime is: %Iu\n",i, number);
         }
 
-        number++;
+        number += 2;
     }
 
-    printf("\n%llu prime is: %Iu\n", i, number-1);
+    printf("\n%Iu prime is: %Iu\n", i, number - 2);
 #endif
     return 0;
 }
