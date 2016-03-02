@@ -1251,14 +1251,18 @@ int test_perfect(size_t n)
 
 	sum -= n;
 
-	if (sum == n)
-		return 0;
-	if (sum < n)
-		return -1;
-	if (sum > n)
-		return 1;
+    int return_value;
+
+    if (sum == n)
+        return_value = 0;
+    if (sum < n)
+        return_value = -1;
+    if (sum > n)
+        return_value = 1;
 
 	free(divisors);
+
+    return return_value;
 }
 
 void expansion_factorial(size_t n, size_t* factorials, size_t* size)
