@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 #endif
 
             // perimeter = k * 2m(m+n)
-            for (size_t k = 1; k * 2 * m * (m + n) < perimeter_limit; ++k)
+            for (size_t k = 1; k * 2 * m * (m + n) <= perimeter_limit; ++k)
             {
                 perimeters[k * (a + b + c) - 1]++;
             }
