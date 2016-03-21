@@ -201,6 +201,7 @@ void expansion_factorial(size_t n, size_t* factorials, size_t* size);
 // size   - размерность массива
 // return - количество неупорядоченных разбиений
 size_t p(size_t n, size_t k[], size_t size);
+void p(size_t n, char*** cached_answers);
 
 // [Task_33] - поиск наибольшего общего делителя
 //

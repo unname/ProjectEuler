@@ -596,7 +596,7 @@ void sum_string(char* n1, char*  n2, char* sum, size_t* length)
     char* max_number;
     char* min_number;
     
-    if (strlen(n1) >= strlen(n2))
+    if (strlen(n1) > strlen(n2) || strlen(n1) == strlen(n2) && strcmp(n1, n2) >= 0)
     {
         max_number = n1;
         min_number = n2;
@@ -608,6 +608,7 @@ void sum_string(char* n1, char*  n2, char* sum, size_t* length)
     }
 
     char* result = (char*)malloc(sizeof(char) * (strlen(max_number) + 1 + 1));
+    memset(result, 0, sizeof(char) * (strlen(max_number) + 1 + 1));
 
     for (size_t i = 0; i < strlen(max_number); ++i)
     {
@@ -635,8 +636,8 @@ void sum_string(char* n1, char*  n2, char* sum, size_t* length)
     
     if (sum)
     {
-        for (size_t i = 0; i < *length; ++i)
-            sum[i] = result[*length - i - 1 - 1];
+        for (size_t i = 0; i < *length - 1; ++i)
+            sum[i] = result[(*length) - i - 1 - 1];
 
         sum[*length - 1] = '\0';
     }
@@ -651,7 +652,7 @@ void sub_string(char* n1, char*  n2, char* sub, size_t* length)
     char* max_number;
     char* min_number;
 
-    if (strcmp(n1, n2) >= 0)
+    if (strlen(n1) > strlen(n2) || strlen(n1) == strlen(n2) && strcmp(n1, n2) >= 0)
     {
         max_number = n1;
         min_number = n2;
@@ -695,8 +696,15 @@ void sub_string(char* n1, char*  n2, char* sub, size_t* length)
         {
             if (max_number[strlen(max_number) - i - 1])
             {
-                result[i] = max_number[strlen(max_number) - i - 1] - offset;
-                offset = 0;
+                if (max_number[strlen(max_number) - i - 1] == '0' && offset)
+                {
+                    result[i] = '9';
+                }
+                else
+                {
+                    result[i] = max_number[strlen(max_number) - i - 1] - offset;
+                    offset = 0;
+                }
             }
             else
             {
@@ -1316,6 +1324,70 @@ size_t p(size_t n, size_t k[], size_t size)
         result++;
 
     return result;
+}
+
+void p(size_t n, char*** cached_answers)
+{
+    if (!*cached_answers)
+        return;
+
+    if (n < 0)
+        return;
+
+    if (strcmp((*cached_answers)[n], "0"))
+        return;
+    
+    for (size_t k = 1; k <= n; ++k)
+    {
+        size_t k1 = k * (3 * k - 1) / 2;
+        size_t k2 = k * (3 * k + 1) / 2;
+
+        size_t answer_size = 0;
+
+        if (n >= k1)
+        {
+            p(n - k1, cached_answers);
+
+            if (k % 2 == 1)
+            {
+                sum_string((*cached_answers)[n], (*cached_answers)[n - k1], NULL, &answer_size);
+                (*cached_answers)[n] = (char*)realloc((*cached_answers)[n], sizeof(char) * answer_size);
+                sum_string((*cached_answers)[n], (*cached_answers)[n - k1], (*cached_answers)[n], &answer_size);
+            }
+            else
+            {
+                sub_string((*cached_answers)[n], (*cached_answers)[n - k1], (*cached_answers)[n], &answer_size);
+
+                char* tmp = (char*)malloc(sizeof(char) * answer_size);
+                strcpy_s(tmp, answer_size, (*cached_answers)[n]);
+                free((*cached_answers)[n]);
+                (*cached_answers)[n] = tmp;
+            }
+        }
+
+        if (n >= k2)
+        {
+            p(n - k2, cached_answers);
+
+            if (k % 2 == 1)
+            {
+                sum_string((*cached_answers)[n], (*cached_answers)[n - k2], NULL, &answer_size);
+                (*cached_answers)[n] = (char*)realloc((*cached_answers)[n], sizeof(char) * answer_size);
+                sum_string((*cached_answers)[n], (*cached_answers)[n - k2], (*cached_answers)[n], &answer_size);
+            }
+            else
+            {
+                sub_string((*cached_answers)[n], (*cached_answers)[n - k2], (*cached_answers)[n], &answer_size);
+
+                char* tmp = (char*)malloc(sizeof(char) * answer_size);
+                strcpy_s(tmp, answer_size, (*cached_answers)[n]);
+                free((*cached_answers)[n]);
+                (*cached_answers)[n] = tmp;
+            }
+        }
+    }
+
+    return;
 }
 
 size_t gcd(size_t n, size_t m)
