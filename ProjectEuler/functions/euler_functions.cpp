@@ -1667,7 +1667,7 @@ void get_convergent(size_t number, size_t approx_degree, char* out_numerator, si
         free(tmp);
     }
 
-    //так как апоследний шаг итерации подсчёта - это переворачивание дроби
+    //так как последний шаг итерации подсчёта - это переворачивание дроби
     *out_num_size = strlen(denominator) + 1;
     *out_den_size = strlen(numerator) + 1;
 
