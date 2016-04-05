@@ -83,23 +83,7 @@ int main(int argc, char **argv)
         }
     }
 
-
-    size_t result = triangle[0][0];
-    size_t row_position = 0;
-
-    for (size_t i = 1; i < column_size; ++i)
-    {
-        if (sum_triangle[i][row_position + 1] > sum_triangle[i][row_position])
-            row_position++;
-
-        result += triangle[i][row_position];
-
-#ifdef _DEBUG
-        printf("Collumn(%Iu): %Iu\n", i + 1, triangle[i][row_position]);
-#endif 
-    }
-
-    printf("\nResult: %Iu\n", result);
+    printf("\nResult: %Iu\n", sum_triangle[0][0]);
 
     for (size_t i = 0; i < column_size; ++i)
         free(sum_triangle[i]);
