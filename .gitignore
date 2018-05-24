@@ -11,3 +11,6 @@ ProjectEuler/*.sdf
 ProjectEuler/*.opensdf
 ProjectEuler/*.suo
 
+ProjectEuler/.vs/
+ProjectEuler/*.db
+ProjectEuler/*.VC.db
