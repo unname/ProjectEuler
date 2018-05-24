@@ -56,7 +56,7 @@ bool test_sprp(size_t n, size_t a);
 // return true - у числа не найдено делителей из набора
 bool test_divisors(size_t n, size_t k);
 
-// [Task_3] - проверяет число n на простату
+// [Task_3] - проверяет число n на простоту
 //
 // n           - исходное число
 // return true - число простое
